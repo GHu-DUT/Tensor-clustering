@@ -3,4 +3,5 @@ Tensor clustering: evaluate the stability of ICA decomposition by considering th
 
 
 demo_Multi_Subjects.m : for GroupICA; 
+
 demo_Single_Subjects.m : for individual ICA.
