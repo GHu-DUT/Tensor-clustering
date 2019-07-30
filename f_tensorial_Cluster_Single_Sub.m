@@ -7,9 +7,9 @@ function f_tensorial_Cluster_Single_Sub(data,runs,Comp,OutPutdir,Method)
 % runs:       (scalar) the number of runs for each model order
 % Comp:       (vector) the model order to be selected    
 % OutPutdir:  (string) the directory for results to be saved
-% Method:     (string) the ICA algorithm to be used: 'FastICA'/'InfomaxICA'
+% Method:     (string) the ICA algorithm to be used: 'FastICA' / 'InfomaxICA'
 
-% ver 1.0 030519 GQ
+% ver 1.0 073019 GQ
 
 
 for isComp = Comp
@@ -22,13 +22,11 @@ for isComp = Comp
     switch Method
         case 'FastICA'
             MaxIteration = 100;
-%              [sR,step]=icassoEst('both',score(:,1:isComp)',runs, 'lastEig', isComp, 'g','tanh', ...
-%                 'approach', 'symm');
-            [sR,step]=icassoEst('both',data',runs, 'lastEig', isComp, 'g','tanh', ...
-                'approach', 'symm');
+             [sR,step]=icassoEst('both',score(:,1:isComp)',runs, 'lastEig', isComp, 'g','tanh', ...
+                 'approach', 'symm');
         case 'InfomaxICA'
             MaxIteration = 512;
-            [sR step]=icassoEst_infomaxICA('both',data',runs, 'lastEig', isComp, 'g', 'tanh', ...
+            [sR step]=icassoEst_infomaxICA('both',score(:,1:isComp)',runs, 'lastEig', isComp, 'g', 'tanh', ...
                 'approach', 'symm');
         otherwise
             disp('Unknow method.');
