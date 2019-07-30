@@ -8,7 +8,7 @@ function f_plot_ICA_Parameter_tensorialClustering(ResultName,MaxIteration,Comp)
 % Comp:         (vector) the range of number of extracted components
 %
 
-% ver 1.0 030519 GQ
+% ver 1.0 073019 GQ
 
 maxRun = 0;
 for isComp = Comp
@@ -52,8 +52,8 @@ ylabel('Number of steps')
 xlabel('Number of extracted components');
 ylim([-10 MaxIteration+40]);
 set(gca,'fontsize',14);
-legend(['Mean of numbers of used steps' sprintf('\n') 'to converge among' int2str(runs) 'runs'],...
-    ['SD of numbers of used steps' sprintf('\n') 'to converge among' int2str(runs) 'runs'],'Location','Best');
+legend(['Mean of numbers of used steps' sprintf('\n') 'to converge among ' int2str(runs) ' runs'],...
+    ['SD of numbers of used steps' sprintf('\n') 'to converge among ' int2str(runs) ' runs'],'Location','Best');
 grid on;xlim([min(Comp)-0.5 max(Comp)+1]);
 figure;
 plot(Patameter(1:maxComp,1),'+m','linewidth',2);hold on
