@@ -9,7 +9,7 @@ function f_tensorial_Cluster_Single_Sub(data,runs,Comp,OutPutdir,Method)
 % OutPutdir:  (string) the directory for results to be saved
 % Method:     (string) the ICA algorithm to be used: 'FastICA' / 'InfomaxICA'
 
-% ver 1.0 073019 GQ
+% ver 1.0 041720 GQ
 
 
 for isComp = Comp
@@ -70,6 +70,8 @@ for isComp = Comp
     Similarity = SimA.*SimS;
     load([ResultFile filesep 'Component_S.mat']);
     [iq,A,W,S,sR] = f_Cluster_Feature(Similarity,sR,isComp,S);
+    Temporal = coeff(:,1:isComp)/W;
+    save([ResultFile filesep 'Temporal'],'Temporal','-v7.3');
     save([ResultFile filesep 'Matrix_iq'],'iq','-v7.3');
     save([ResultFile filesep 'Matrix_sR'],'sR','-v7.3');
     clear Temporal

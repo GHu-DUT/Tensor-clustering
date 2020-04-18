@@ -9,7 +9,7 @@ function f_tensorial_Cluster_Multi_Sub(SourceFile,runs,Comp,OutPutdir,Method)
 % OutPutdir:    (string) the directory for results to be saved
 % Method:       (string) the ICA algorithm to be used: 'FastICA'/'InfomaxICA'
 
-% ver 1.0 030519 GQ
+% ver 1.0 041720 GQ
 
 %% Organize data
 file = dir([SourceFile filesep '*.mat']);
@@ -119,8 +119,11 @@ for isComp = Comp
         %% Cluster of matrix
         load([ResultFile filesep 'Component_S']);
         [iq,A,W,S,SubsR] = f_Cluster_Feature(Similarity,SubsR,isComp,S);
+        Temporal = squeeze(Coeff_AllSub(:,1:Cont(isSub),isSub))*...
+                coeff(sum(Cont(1:isSub-1))+1:sum(Cont(1:isSub)),1:isComp)/W;
         save([ResultFile filesep 'Matrix_Temporal_Iq_Sub#' num2str(isSub)],'iq','-v7.3');
         save([ResultFile filesep 'Matrix_Temporal_sR_Sub#' num2str(isSub)],'SubsR','-v7.3');
+        save([ResultFile filesep 'Temporal_Sub#' num2str(isSub)],'Temporal','-v7.3');clear Temporal;
         Iq_AllSub_Temporal(:,isSub) = iq;
     end
     save([ResultFile filesep 'Iq_AllSub_Temporal'],'Iq_AllSub_Temporal','-v7.3');
