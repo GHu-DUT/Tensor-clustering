@@ -4,14 +4,14 @@ close all
 
 tic
 %% Parameters need to be changed
-load megdata.mat
-megdata = megdata-repmat(mean(megdata'),size(megdata,2),1)';
+load Demodata.mat
+data = data-repmat(mean(data'),size(data,2),1)';
 runs = 5;
-Comp = 2:10;
-Method = 'InfomaxICA';
+Comp = 2:5;
+Method = 'FastICA';
 OutPutdir = ['Result_' Method];
 %% ICA and Tensor clustering for single subject
-f_tensorial_Cluster_Single_Sub(megdata',runs,Comp,OutPutdir,Method);
+f_tensorial_Cluster_Single_Sub(data,runs,Comp,OutPutdir,Method);
 %% plot ICA capability scope
 switch Method
     case 'FastICA'
