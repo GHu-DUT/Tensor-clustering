@@ -247,7 +247,7 @@ sR.fasticaoptions=fasticaoptions;
 k=0; index=[];
 for i=1:M,
     %clc;
-    fprintf('\n\n%s\n\n',['Randomization using FastICA: Round ' num2str(i) '/' ...
+    fprintf('\n\n%s\n\n',['Randomization using InfomaxICA: Round ' num2str(i) '/' ...
         num2str(M)]);
     
     switch mode
