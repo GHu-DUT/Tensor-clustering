@@ -33,8 +33,6 @@ function [sR step]=icassoEst_infomaxICA(mode,X,M,varargin)
 %pairs: 'identifier1', value1, 'identifier2', value2,...
 %(case insensitive)
 %
-%FastICA parameters apply here (see function fastica)
-%Default: 'approach', 'symm', 'g', 'pow3', 'maxNumIterations', 100
 %
 %OUTPUTS
 %
@@ -205,14 +203,14 @@ if (isWhitesig | isWhitemat | isDewhitemat),
             ' used in modes ''bootstrap'' and ''both''.']);
     end
     
-    %% FastICA expects that all of the three arguments are given (see
+    %% Infomax expects that all of the three arguments are given (see
     %help fastica): if not, error
     
     if isWhitesig & isWhitemat & isDewhitemat,
         disp('Using user specified whitening.');
     else
         error(['To prewhiten, each of ''whiteSig'',''whiteMat'',''dewhiteMat'' have to' ...
-            ' be given (see help fastica)']);
+            ' be given']);
     end
 else
     % compute whitening for original data
@@ -243,34 +241,15 @@ end
 
 sR.fasticaoptions=fasticaoptions;
 
-%% Compute N times FastICA
+%% Compute N times InfomaxICA
 k=0; index=[];
 for i=1:M,
     %clc;
     fprintf('\n\n%s\n\n',['Randomization using InfomaxICA: Round ' num2str(i) '/' ...
         num2str(M)]);
     
-    switch mode
-        case 'randinit'
-            % data is fixed;
-            X_=X;
-        case {'bootstrap','both'}
-            % Bootstrap and compute whitening for _bootstrapped_ data
-            X_=bootstrap(X);
-            % %     [w,White,deWhite]=fastica(X_,'only','white',fasticaoptions{:});
-            [w,White,meanvar,bias,signs,lrates] = f_infomaxICA(X);  
-            step(i) = length(lrates);
-            deWhite = inv(White);
-            w = w*White;
-        otherwise
-            error('Internal error?!');
-    end
-    
-    % Estimate FastICA set displayMode off
-    % %     [dummy,A_,W_]=fastica(X_,fasticaoptions{:},...
-    % %         'whiteMat',White,'dewhiteMat',deWhite,'whiteSig',w,...
-    % %         'sampleSize',1,'displayMode','off');
-    [w,White] = f_infomaxICA(X_);
+    [w,White,meanvar,bias,signs,lrates] = f_infomaxICA(X);
+    step(i) = length(lrates);
     W_ = w*White;
     A_ = inv(W_);
     
